@@ -1,0 +1,9 @@
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\bin\Debug\MinesweeperPlayer.exe.config
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\bin\Debug\MinesweeperPlayer.exe
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\bin\Debug\MinesweeperPlayer.pdb
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\obj\Debug\MinesweeperPlayer.csprojResolveAssemblyReference.cache
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\obj\Debug\MinesweeperPlayer.BorderForm.resources
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\obj\Debug\MinesweeperPlayer.MainForm.resources
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\obj\Debug\MinesweeperPlayer.csproj.GenerateResource.Cache
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\obj\Debug\MinesweeperPlayer.exe
+C:\Users\NasIta\Documents\SharpDevelop Projects\MinesweeperPlayer\MinesweeperPlayer\obj\Debug\MinesweeperPlayer.pdb
