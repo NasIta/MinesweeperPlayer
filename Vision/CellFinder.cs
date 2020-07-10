@@ -9,7 +9,7 @@ namespace MinesweeperPlayer.Vision
 	public static class CellFinder
 	{
 		private const float Epsilon = 0.00001f;
-		private const int ColorMapSize = 3;
+		private const int ColorMapSize = 4;
 		
 		private static float _closedBrightness;					// original color of closed cell
 		private static int _delta;								// used for jumping over cell borders 
@@ -74,55 +74,68 @@ namespace MinesweeperPlayer.Vision
 			return size;
 		}
 		
-		public static Bitmap[,] Slice(this Bitmap bmp)
+		public static Color[,][,] GetCellColorMaps(this Bitmap bmp)
 		{
 			int _width = MainForm.FieldSize.Width;
 			int _height = MainForm.FieldSize.Height;
 			
-			var cells = new Bitmap[_width, _height];
+			var colorMaps = new Color[_width, _height][,];
 			
 			for (int ycell = 0; ycell < _height; ycell++) 
 			{
 				for (int xcell = 0; xcell < _width; xcell++) 
 				{
-					cells[xcell, ycell] = new Bitmap(bmp.Width / _width, bmp.Height / _height);
+					float step = bmp.Width / _width / (ColorMapSize + 1f);
 					
-					for (int y = 0; y < bmp.Height / _height; y++) 
+					colorMaps[xcell, ycell] = new Color[ColorMapSize, ColorMapSize];
+					
+					for (int y = 0; y < ColorMapSize; y++) 
 					{
-						for (int x = 0; x < bmp.Width / _width; x++) 
+						for (int x = 0; x < ColorMapSize; x++) 
 						{
-							cells[xcell, ycell].SetPixel(x, y, bmp.GetPixel(xcell * bmp.Width / _width + x, ycell * bmp.Height / _height + y));
+							float stepX = step * (x + 1);
+							float stepY = step * (y + 1);
+							
+							int stepFlooredX = Convert.ToInt32(Math.Floor(stepX));
+							int stepFlooredY = Convert.ToInt32(Math.Floor(stepY));
+							
+							colorMaps[xcell, ycell][x, y] = bmp.GetPixel(xcell * bmp.Width / _width + stepFlooredX, ycell * bmp.Height / _height + stepFlooredY);
 						}
 					}
 				}
 			}
 			
-			return cells;
+			return colorMaps;
 		}
 		
-		public static char[,] GetCellValues(this Bitmap[,] bmp)
+		public static char[,] GetCellValues(this Color[,][,] colorMaps)
 		{
-			var map = new char[MainForm.FieldSize.Width, MainForm.FieldSize.Height];
+			var valueMap = new char[MainForm.FieldSize.Width, MainForm.FieldSize.Height];
 			
 			for (int y = 0; y < MainForm.FieldSize.Height; y++) 
 			{
 				for (int x = 0; x < MainForm.FieldSize.Width; x++) 
 				{
-					map[x, y] = bmp[x, y].GetCellValue();
+					valueMap[x, y] = colorMaps[x, y].GetCellValue();
 				}
 			}
 			
-			return map;
+			return valueMap;
 		}
 		
-		private static char GetCellValue(this Bitmap bmp)
+		public static char GetCellValue(this Bitmap bmp)
+		{
+			return bmp.GetCellColorMap().GetCellValue();
+		}
+		
+		private static char GetCellValue(this Color[,] colorMap)
 		{
 			float min = float.MaxValue;
 			char value = '_';
 			
 			foreach(var sample in _samples)
 			{
-				int result = CompareColorMaps(sample.ColorMap, bmp.GetCellColorMap());
+				int result = CompareColorMaps(sample.ColorMap, colorMap);
 				
 				if (result < min) 
 				{
@@ -136,8 +149,6 @@ namespace MinesweeperPlayer.Vision
 		
 		private static Color[,] GetCellColorMap(this Bitmap bmp)
 		{
-			const int ColorMapSize = 5;
-			
 			float step = bmp.Width / (ColorMapSize + 1f);
 			
 			var map = new Color[ColorMapSize, ColorMapSize];

@@ -11,7 +11,7 @@ namespace MinesweeperPlayer
 	{
 		public static Rectangle WorkingArea {get; set;}
 		public static Bitmap FieldScreen {get; set;}
-		public static Bitmap[,] Cells {get; set;}
+		public static Color[,][,] ColorMaps {get; set;}
 		public static Size FieldSize {get; set;}
 		public static char[,] ValueMap {get; set;}
 		
@@ -69,21 +69,10 @@ namespace MinesweeperPlayer
 				
 				FieldScreen = CellFinder.GetNormilizedScreen();
 				FieldSize = FieldScreen.GetFieldSize();
-				Cells = FieldScreen.Slice();
+				ValueMap = FieldScreen.GetCellColorMaps().GetCellValues();
 				
 				FieldScreen.Dispose();
 				FieldScreen = null;
-				
-				ValueMap = Cells.GetCellValues();
-				
-				for (int y = 0; y < FieldSize.Height; y++) 
-				{
-					for (int x = 0; x < FieldSize.Width; x++) 
-					{
-						Cells[x, y].Dispose();
-						Cells[x, y] = null;
-					}
-				}
 				
 				var d2 = DateTime.Now;
 				
