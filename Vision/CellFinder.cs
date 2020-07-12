@@ -22,7 +22,7 @@ namespace MinesweeperPlayer.Vision
 			LoadSamples();
 		}
 		
-		public static Bitmap GetNormilizedScreen()
+		public static void SetNormilizedBorder()
 		{
 			using(var fullBmp = Screener.MakeFullScreenshot())		
 			{
@@ -46,8 +46,6 @@ namespace MinesweeperPlayer.Vision
 				
 				MainForm.WorkingArea = new Rectangle(x - 2, y - 2, w + MainForm.WorkingArea.X - x + 5, h + MainForm.WorkingArea.Y - y + 5);
 			}
-			
-			return Screener.MakeFieldScreenshot();
 		}
 		
 		public static Size GetFieldSize(this Bitmap bmp)

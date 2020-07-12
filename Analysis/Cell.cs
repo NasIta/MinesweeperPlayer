@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MinesweeperPlayer.Analysis
@@ -7,6 +8,7 @@ namespace MinesweeperPlayer.Analysis
 	{
 		public static Size Size {get; set;}
 		public static Cell[,] Field {get; set;}
+		public static List<Cell> ClosedNumbers {get; set;}
 		
 		public char Value {get; private set;}
 		public int NumberValue;
@@ -22,6 +24,8 @@ namespace MinesweeperPlayer.Analysis
 		
 		public void SetValue(char Value)
 		{
+			this.Value = Value;
+			
 			if (Int32.TryParse(Value.ToString(), out NumberValue))
 			{
 				isNumber = true;

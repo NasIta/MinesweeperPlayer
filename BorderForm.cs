@@ -7,6 +7,7 @@ namespace MinesweeperPlayer
 	public partial class BorderForm : Form
 	{
 		public static bool borderSeted;
+		public static bool borderChanged;
 		
 		private Rectangle _rect;
 		private Bitmap _bmp;
@@ -28,6 +29,7 @@ namespace MinesweeperPlayer
 		private void PictureBox1MouseUp(object sender, MouseEventArgs e)
 		{
 			borderSeted = true;
+			borderChanged = true;
 		}
 		
 		private void PictureBox1MouseMove(object sender, MouseEventArgs e)

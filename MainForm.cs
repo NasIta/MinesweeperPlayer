@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using MinesweeperPlayer.Analysis;
 using MinesweeperPlayer.Vision;
 
 namespace MinesweeperPlayer
@@ -65,31 +66,54 @@ namespace MinesweeperPlayer
 					_borderForm.Close();
 				}
 				
-				var d1 = DateTime.Now;
+				if (BorderForm.borderChanged) 
+				{
+					CellFinder.SetNormilizedBorder();
+					FieldScreen = Screener.MakeFieldScreenshot();
+					FieldSize = FieldScreen.GetFieldSize();
+					
+					BorderForm.borderChanged = false;
+				}
 				
-				FieldScreen = CellFinder.GetNormilizedScreen();
-				FieldSize = FieldScreen.GetFieldSize();
-				ValueMap = FieldScreen.GetCellColorMaps().GetCellValues();
+				for (int i = 0; i < 1000; i++) 
+				{
+					try
+					{
+						FieldScreen = Screener.MakeFieldScreenshot();
+						ValueMap = FieldScreen.GetCellColorMaps().GetCellValues();
+						Cell.Field = ValueMap.ToCell();
+						Analyzer.Solve();
+						System.Threading.Thread.Sleep(350);
+						
+						button3.Text = i.ToString();
+						button3.Update();
+						
+						if (Analyzer.Clicked == 0) 
+						{
+							break;
+						}
+					}
+					catch{}
+				}
+				
 				
 				FieldScreen.Dispose();
 				FieldScreen = null;
 				
-				var d2 = DateTime.Now;
-				
-				var checkMap = new System.Text.StringBuilder("");
-				
-				for (int y = 0; y < FieldSize.Height; y++) 
-				{
-					for (int x = 0; x < FieldSize.Width; x++) 
-					{
-						checkMap.Append(ValueMap[x, y] + "  ");
-					}
-					
-					checkMap.Append("\n");
-				}
-				
-				checkMap.Append("\n\nCalculated for " + (d2 - d1).TotalMilliseconds.ToString("0.000") + " milliseconds");
-				
+//				var checkMap = new System.Text.StringBuilder("");
+//				
+//				for (int y = 0; y < FieldSize.Height; y++) 
+//				{
+//					for (int x = 0; x < FieldSize.Width; x++) 
+//					{
+//						checkMap.Append(Cell.Field[x, y].Value + "  ");
+//					}
+//					
+//					checkMap.Append("\n");
+//				}
+//				
+//				checkMap.Append("\n\nCalculated for " +/* (d2 - d1).TotalMilliseconds.ToString("0.000") + */" milliseconds");
+//				
 //				MessageBox.Show(checkMap.ToString());
 //				
 //				for (int y = 0; y < FieldSize.Height; y++) 
