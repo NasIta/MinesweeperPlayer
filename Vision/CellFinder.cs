@@ -9,7 +9,7 @@ namespace MinesweeperPlayer.Vision
 	public static class CellFinder
 	{
 		private const float Epsilon = 0.00001f;
-		private const int ColorMapSize = 4;
+		private const int ColorMapSize = 5;
 		
 		private static float _closedBrightness;					// original color of closed cell
 		private static int _delta;								// used for jumping over cell borders 
@@ -71,6 +71,8 @@ namespace MinesweeperPlayer.Vision
 					size = new Size(size.Width, size.Height + 1);
 			}
 			
+			Analysis.Cell.Size = new Size(bmp.Width / size.Width + 1, bmp.Width / size.Width + 1);
+				
 			return size;
 		}
 		
@@ -121,6 +123,21 @@ namespace MinesweeperPlayer.Vision
 			}
 			
 			return valueMap;
+		}
+		
+		public static Analysis.Cell[,] ToCell(this char[,] valueMap)
+		{
+			var cells = new Analysis.Cell[MainForm.FieldSize.Width, MainForm.FieldSize.Height];
+			
+			for (int y = 0; y < MainForm.FieldSize.Height; y++) 
+			{
+				for (int x = 0; x < MainForm.FieldSize.Width; x++) 
+				{
+					cells[x, y] = new Analysis.Cell(valueMap[x, y], x, y);
+				}
+			}
+			
+			return cells;
 		}
 		
 		public static char GetCellValue(this Bitmap bmp)

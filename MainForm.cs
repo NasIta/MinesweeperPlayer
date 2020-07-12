@@ -90,7 +90,11 @@ namespace MinesweeperPlayer
 				
 				checkMap.Append("\n\nCalculated for " + (d2 - d1).TotalMilliseconds.ToString("0.000") + " milliseconds");
 				
-				MessageBox.Show(checkMap.ToString());
+//				MessageBox.Show(checkMap.ToString());
+//				
+//				for (int y = 0; y < FieldSize.Height; y++) 
+//					for (int x = 0; x < FieldSize.Width; x++)
+//						MouseControll.MouseController.Close(x, y);
 			}
 		}
 	}
