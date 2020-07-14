@@ -23,15 +23,20 @@ namespace MinesweeperPlayer.Analysis
 			foreach (var cell in opened)
 				foreach (var near in cell.GetNearest('C'))
 					near.Open();
+			
+			if (Clicked == 0)
+			{
+				
+			}
 		}
 		
 		private static List<Cell> GetOpenedNumberCells()
 		{
 			var openedNumbers = new List<Cell>();
 			
-			for (int y = 1; y < MainForm.FieldSize.Height - 1; y++)
+			for (int y = 0; y < MainForm.FieldSize.Height; y++)
 			{
-				for (int x = 1; x < MainForm.FieldSize.Width - 1; x++)
+				for (int x = 0; x < MainForm.FieldSize.Width; x++)
 				{
 					if (Cell.Field[x, y].isNumber)
 					{
@@ -50,9 +55,9 @@ namespace MinesweeperPlayer.Analysis
 		{
 			var closedNumbers = new List<Cell>();
 			
-			for (int y = 1; y < MainForm.FieldSize.Height - 1; y++)
+			for (int y = 0; y < MainForm.FieldSize.Height; y++)
 			{
-				for (int x = 1; x < MainForm.FieldSize.Width - 1; x++)
+				for (int x = 0; x < MainForm.FieldSize.Width; x++)
 				{
 					if (Cell.Field[x, y].isNumber)
 					{
@@ -79,6 +84,8 @@ namespace MinesweeperPlayer.Analysis
 					
 					int xcurrent = cell.Location.X + dx;
 					int ycurrent = cell.Location.Y + dy;
+					
+					if(xcurrent < 0 || ycurrent < 0 || xcurrent >= MainForm.FieldSize.Height || ycurrent >= MainForm.FieldSize.Height) continue;
 					
 					for (int i = 0; i < values.Length; i++) 
 					{

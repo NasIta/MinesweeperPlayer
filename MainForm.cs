@@ -90,7 +90,7 @@ namespace MinesweeperPlayer
 						
 						if (Analyzer.Clicked == 0) 
 						{
-							break;
+							//break;
 						}
 					}
 					catch{}
