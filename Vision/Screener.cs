@@ -17,8 +17,8 @@ namespace MinesweeperPlayer.Vision
 			
 			_graph.CopyFromScreen(MainForm.WorkingArea.X, MainForm.WorkingArea.Y, 0, 0, _bmp.Size);
 			
-//			var date = DateTime.Now.ToString("MMddyyHmmss");
-//			_bmp.Save(@"C:\Users\NasIta\Desktop\printscreen"+date+".bmp", ImageFormat.Jpeg);
+//			var date = DateTime.Now.ToString("MMddyyHmmssms");
+//			_bmp.Save(@"C:\Users\NasIta\Desktop\printscreen\screen-"+date+".bmp", ImageFormat.Jpeg);
 			
 			return _bmp;
 		}

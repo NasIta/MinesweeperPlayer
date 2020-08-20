@@ -12,15 +12,11 @@ namespace MinesweeperPlayer.Analysis
 		{
 			Clicked = 0;
 			
-			var closed = GetClosedNumberCells();
-			
-			foreach (var cell in closed)
-				foreach (var near in cell.GetNearest('C', 'F'))
+			foreach (var cell in GetToCloseNumberCells())
+				foreach (var near in cell.GetNearest('C'))
 					near.Close();
 			
-			var opened = GetOpenedNumberCells();
-			
-			foreach (var cell in opened)
+			foreach (var cell in GetToOpenNumberCells())
 				foreach (var near in cell.GetNearest('C'))
 					near.Open();
 			
@@ -30,11 +26,11 @@ namespace MinesweeperPlayer.Analysis
 			}
 		}
 		
-		private static List<Cell> GetOpenedNumberCells()
+		private static List<Cell> GetToOpenNumberCells()
 		{
 			var openedNumbers = new List<Cell>();
 			
-			for (int y = 0; y < MainForm.FieldSize.Height; y++)
+			for (int y = 1; y < MainForm.FieldSize.Height - 1; y++)
 			{
 				for (int x = 0; x < MainForm.FieldSize.Width; x++)
 				{
@@ -51,11 +47,11 @@ namespace MinesweeperPlayer.Analysis
 			return openedNumbers;
 		}
 		
-		private static List<Cell> GetClosedNumberCells()
+		private static List<Cell> GetToCloseNumberCells()
 		{
 			var closedNumbers = new List<Cell>();
 			
-			for (int y = 0; y < MainForm.FieldSize.Height; y++)
+			for (int y = 1; y < MainForm.FieldSize.Height - 1; y++)
 			{
 				for (int x = 0; x < MainForm.FieldSize.Width; x++)
 				{
@@ -85,7 +81,7 @@ namespace MinesweeperPlayer.Analysis
 					int xcurrent = cell.Location.X + dx;
 					int ycurrent = cell.Location.Y + dy;
 					
-					if(xcurrent < 0 || ycurrent < 0 || xcurrent >= MainForm.FieldSize.Height || ycurrent >= MainForm.FieldSize.Height) continue;
+					if(xcurrent < 0 || ycurrent < 0 || xcurrent >= MainForm.FieldSize.Width || ycurrent >= MainForm.FieldSize.Height) continue;
 					
 					for (int i = 0; i < values.Length; i++) 
 					{

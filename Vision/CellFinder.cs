@@ -147,17 +147,29 @@ namespace MinesweeperPlayer.Vision
 		{
 			float min = float.MaxValue;
 			char value = '_';
+			int result = 0;
+			
+			//var log = new System.Text.StringBuilder();
 			
 			foreach(var sample in _samples)
 			{
-				int result = CompareColorMaps(sample.ColorMap, colorMap);
+				result = CompareColorMaps(sample.ColorMap, colorMap);
 				
 				if (result < min) 
 				{
 					min = result;
 					value = sample.Value;
 				}
+				
+				//log.Append(sample.Value + " res: " + result + "\n");
 			}
+			
+			if (min > 2500) 
+			{
+				//Application.Exit();
+			}
+			
+			//MessageBox.Show(log + "\n" + min + " - " + value);
 			
 			return value;
 		}

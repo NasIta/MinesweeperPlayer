@@ -74,23 +74,34 @@ namespace MinesweeperPlayer
 					
 					BorderForm.borderChanged = false;
 				}
-				
+				int clickedCacheCount = 0;
 				for (int i = 0; i < 1000; i++) 
 				{
 					try
 					{
+						int clickedCache = Analyzer.Clicked;
+						
+						System.Threading.Thread.Sleep(450);
 						FieldScreen = Screener.MakeFieldScreenshot();
 						ValueMap = FieldScreen.GetCellColorMaps().GetCellValues();
 						Cell.Field = ValueMap.ToCell();
 						Analyzer.Solve();
-						System.Threading.Thread.Sleep(350);
 						
 						button3.Text = i.ToString();
 						button3.Update();
 						
-						if (Analyzer.Clicked == 0) 
+						if (Analyzer.Clicked == clickedCache) 
 						{
-							//break;
+							clickedCacheCount++;
+							
+							if (clickedCacheCount >= 5) 
+							{
+								break;
+							}
+						}
+						else
+						{
+							clickedCacheCount = 0;
 						}
 					}
 					catch{}
